@@ -563,3 +563,41 @@
 # golfwagon.moves()
 
 
+###############################################################################
+### 
+
+## Polymorphism
+
+class Vehicle: 
+    def __init__(self, make, model):
+        self.make = make
+        self.model = model
+        
+    def moves(self):
+        print("Moves along...")
+    
+    def get_make_model(self):
+        print(f"I'm a {self.make} {self.model}.")
+
+class Airplane(Vehicle):      
+    def get_make_model(self):
+        print(f"I'm a {self.make} {self.model}.")
+               
+    def moves(self):
+        print("Flies along...")
+        
+class Truck(Vehicle): 
+    def moves(self):
+        print("Rumbles along...")
+
+class GolfCart(Vehicle): 
+    pass 
+
+cesssna = Airplane("Cessna", "Skyhawk")
+mack = Truck("Mack", "Pinnacle")
+golfwagon = GolfCart("Yamaha", "GC100")
+
+for v in (cesssna, mack, golfwagon): 
+    v.get_make_model() # Although we are using same method but the resposes will be different each time here. And that is polymorphism. 
+    v.moves() 
+    
