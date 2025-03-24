@@ -421,7 +421,7 @@
 
 ########################################################################################
 
-# OOPS in Python
+# Lesson 18 - OOPS in Python
 
 ########################################################################################
 
@@ -568,36 +568,146 @@
 
 ## Polymorphism
 
-class Vehicle: 
-    def __init__(self, make, model):
-        self.make = make
-        self.model = model
+# class Vehicle: 
+#     def __init__(self, make, model):
+#         self.make = make
+#         self.model = model
         
-    def moves(self):
-        print("Moves along...")
+#     def moves(self):
+#         print("Moves along...")
     
-    def get_make_model(self):
-        print(f"I'm a {self.make} {self.model}.")
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model}.")
 
-class Airplane(Vehicle):      
-    def get_make_model(self):
-        print(f"I'm a {self.make} {self.model}.")
+# class Airplane(Vehicle):      
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model}.")
                
-    def moves(self):
-        print("Flies along...")
+#     def moves(self):
+#         print("Flies along...")
         
-class Truck(Vehicle): 
-    def moves(self):
-        print("Rumbles along...")
+# class Truck(Vehicle): 
+#     def moves(self):
+#         print("Rumbles along...")
 
-class GolfCart(Vehicle): 
-    pass 
+# class GolfCart(Vehicle): 
+#     pass 
 
-cesssna = Airplane("Cessna", "Skyhawk")
-mack = Truck("Mack", "Pinnacle")
-golfwagon = GolfCart("Yamaha", "GC100")
+# cesssna = Airplane("Cessna", "Skyhawk")
+# mack = Truck("Mack", "Pinnacle")
+# golfwagon = GolfCart("Yamaha", "GC100")
 
-for v in (cesssna, mack, golfwagon): 
-    v.get_make_model() # Although we are using same method but the resposes will be different each time here. And that is polymorphism. 
-    v.moves() 
+# for v in (cesssna, mack, golfwagon): 
+#     v.get_make_model() # Although we are using same method but the resposes will be different each time here. And that is polymorphism. 
+#     v.moves() 
     
+
+###############################################################################
+### 
+
+# Lesson 19 - Exception Handling (try...except)
+# try:  
+#     print(x)
+# except: # used in place of catch
+#     print("There is an error.")
+
+##########
+# Catching a particular error. 
+
+# x = 2
+# try:  
+#     print(x/0)
+# except NameError: 
+#     print("Something is probably undefined.")
+
+# Here, since we are particularly catching the NameError, if another type of exception occurs it will still raise an exception. 
+
+##############
+
+# x = 2
+# try:  
+#     print(x/0)
+# except NameError: 
+#     print("Something is probably undefined.")
+# except ZeroDivisionError: 
+#     print("Do not divide by zero.")
+
+###############
+
+# x = 2
+# try:  
+#     print(x/0)
+# except NameError: 
+#     print("Something is probably undefined.")
+# except ZeroDivisionError: 
+#     print("Do not divide by zero.")
+# else: # If no exception then this block will be executed. 
+#     print("No errors!")
+# finally: # This will execute whether or not the exception is raised. 
+#     print("I'm going to print with or without an error.")
+    
+############  
+    
+# x = 2
+# try:  
+#     print(x)
+# except: 
+#     print("Something is probably wrong.")
+# else: 
+#     print("No errors!")
+# finally:
+#     print("I'm going to print with or without an error.")
+
+
+
+#############
+# Handing every exception. 
+
+# x = 2
+# try:  
+#     print(x/0)
+# except Exception as error: 
+#     print("Something is probably wrong.")
+
+
+##################
+# Raise  exception and catch them in exception. 
+# x = 2
+# try:  
+#     if not type(x) is str:
+#         raise TypeError() # Raising an exception. 
+# except Exception as error: 
+#     print(error)
+# The above won't print anything on the screen. 
+
+##################
+ 
+# Print specified error message.   
+# x = 2
+# try:  
+#     if not type(x) is str:
+#         raise TypeError("Only Strings are allowed.") 
+# except Exception as error: 
+#     print(error)
+ # The above won't print the error message specified on the screen.    
+    
+
+##################
+# Creating Generic exception. 
+
+# try:  
+#    raise Exception("I'm a custom exception.")
+# except Exception as error: 
+#     print(error)
+
+
+########################
+# Creating a custom exception by creating class. 
+
+# class JustNotCoolError(Exception):
+#     pass
+
+# try:  
+#    raise JustNotCoolError("This just is not cool.")
+# except Exception as error: 
+#     print(error)
