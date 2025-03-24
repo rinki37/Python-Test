@@ -275,11 +275,14 @@
 # import random as rdm
 # rdm.choice() # Now we are accessing using the alias. 
 
+#######
 
 # See what is in the module
 # import random as rdm
 # for item in dir(rdm): # This is will get everything present in the module
 #     print(item) 
+
+#######
 
 # Here, i imported my own module named mymodule and accessed its functions and variables. 
 # import mymodule
@@ -344,4 +347,76 @@
 
 ########################################################################################
 
-# 
+# Lesson 17 - Lambda Function (A single expression that return a value.)
+
+# squared = lambda num : num * num # here num is our parameter like we pass to a function. 
+# print(squared(2))
+
+
+#######
+# addTwo = lambda num : num +2
+# print(addTwo(12))
+
+# sumTotal = lambda a,b: a + b # Traditional way to write the same  - def sum(a,b): return a + b 
+# print(sumTotal(2,2))
+
+
+#################
+# Where to use lambda - when we want to build  a function. 
+
+# def funcBuilder(x): 
+#     return lambda num : num + x
+
+# addTen = funcBuilder(10) # Here, we are passing the value of x. 
+# addTwenty = funcBuilder(20)
+
+# print(addTen(7)) # Here, we are passing the value of num for the lambda. 
+# print(addTwenty(7))
+
+
+########################################################################################
+
+# Higher order function - a function that takes one or functions as arguments or a function that returns functions as its result. 
+
+
+# numbers = [3, 7, 12, 23]
+# squared_nums = map(lambda num : num * num, numbers) # Here, map() is a predefined function, in map() we are passing a lambda and a data collection. 
+# print(list(squared_nums)) # This will give a new list having the squares of the numbers that we provided in a list. 
+# Op -[9, 49, 144, 529]  
+
+
+#######
+# Checking odd - lambda num : num % 2 != 0 
+
+# Here, we are checking which numbers from numbers list are odd and then filtering(using the predefiend function) and getting only odd ones in a list. We can do the same using loop but this way can give us concise code. 
+# numbers = [3, 7, 12, 23]
+# odd_nums = filter(lambda num : num % 2 != 0, numbers)
+# print(list(odd_nums)) # Op -[3, 7, 23]
+
+
+#######
+# This is basically curr takes a number from the list, and initially in acc it's 0, so it will add the acc and curr, then the result will be in acc, and then that acc will be added to curra nd so on... 
+
+# numbers = [1,2,3,4,5,1]
+# from functools import reduce
+
+# total = reduce(lambda acc, curr: acc + curr, numbers)
+# print(total)
+
+# OR ##############
+# The above can be achieved using the below too. 
+
+# numbers = [1,2,3,4,5,1]
+# print(sum(numbers))
+
+
+############
+# Getting the character count using reduce. 
+# from functools import reduce
+# names = ["Dave", "Sara", "John Jacob Jingleheimerschmidt"]
+# char_count = reduce(lambda acc, curr: acc + len(curr), names, 0) # 0 is starting value
+# print(char_count)
+
+
+
+########################################################################################
