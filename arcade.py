@@ -1,3 +1,4 @@
+# Run using py arcade.py -n "Rinki"
 import sys
 from guess_number import guessing_game
 from rps import rps
