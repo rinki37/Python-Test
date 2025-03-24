@@ -420,3 +420,146 @@
 
 
 ########################################################################################
+
+# OOPS in Python
+
+########################################################################################
+
+# Classes in Python - Blueprint of objects. 
+# class Vehicle: # Class name will be in capital. 
+#     def moves(self): # referring to itself
+#         print("Moves along...")
+    
+# my_car = Vehicle() # Here, my_car is the object of Vehicle class. 
+# my_car.moves()
+
+########################################################################################
+# Initializer function
+
+# class Vehicle: 
+#     def __init__(self, make, model):
+#         self.make = make
+#         self.model = model
+        
+#     def moves(self):
+#         print("Moves along...")
+    
+# my_car = Vehicle("Tesla", "Model 3") # Here, we are passing  value to be assigned to the property. 
+# print(my_car.make) # Accessing property of class. 
+# print(my_car.model)
+# my_car.moves() # Accesssing method of the class. 
+
+########################################################################################
+
+# Creating differnt object and accessing properties and method using them. 
+
+# class Vehicle: 
+#     def __init__(self, make, model):
+#         self.make = make
+#         self.model = model
+        
+#     def moves(self):
+#         print("Moves along...")
+    
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model}.")
+    
+# my_car = Vehicle("Tesla", "Model 3") 
+# my_car.get_make_model()
+# my_car.moves()
+
+# your_car = Vehicle("Tata", "Nano") 
+# your_car.get_make_model() 
+# your_car.moves()
+
+
+########################################################################################
+
+# Inheritence ()
+# # A class cannot be empty. 
+
+# class Vehicle: 
+#     def __init__(self, make, model):
+#         self.make = make
+#         self.model = model
+        
+#     def moves(self):
+#         print("Moves along...")
+    
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model}.")
+    
+# my_car = Vehicle("Tesla", "Model 3") 
+# my_car.get_make_model()
+# my_car.moves()
+
+# your_car = Vehicle("Tata", "Nano") 
+# your_car.get_make_model() 
+# your_car.moves()
+
+
+# class Airplane(Vehicle): # Inheriting Vehicle class in Airplane class
+#     def moves(self):
+#         print("Flies along")
+        
+# class Truck(Vehicle): # Inheriting Vehicle class in Truck class
+#     def moves(self):
+#         print("Rumbles along")
+
+# class GolfCart(Vehicle): # Inheriting Vehicle class in GolfCart class
+#     pass # It denotes we are not overridding anything here so it will inherit everything from the parent class.  
+
+# cesssna = Airplane("Cessna", "Skyhawk")
+# mack = Truck("Mack", "Pinnacle")
+# golfwagon = GolfCart("Yamaha", "GC100")
+# cesssna.get_make_model()
+# cesssna.moves()
+# mack.get_make_model()
+# mack.moves()
+# golfwagon.get_make_model()
+# golfwagon.moves()
+
+
+
+###############################################################################
+### -
+# class Vehicle: 
+#     def __init__(self, make, model):
+#         self.make = make
+#         self.model = model
+        
+#     def moves(self):
+#         print("Moves along...")
+    
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model}.")
+
+# class Airplane(Vehicle):
+#     def __init__(self, make, model, faa_id):
+#         super().__init__(make, model) # Inherting make and moddel properties from super class i.e. parent class. 
+#         self.faa_id = faa_id
+        
+#     def get_make_model(self):
+#         print(f"I'm a {self.make} {self.model} with identification number {self.faa_id}.")
+               
+#     def moves(self):
+#         print("Flies along...")
+        
+# class Truck(Vehicle): 
+#     def moves(self):
+#         print("Rumbles along...")
+
+# class GolfCart(Vehicle): 
+#     pass 
+
+# cesssna = Airplane("Cessna", "Skyhawk", "12-ADDA1")
+# mack = Truck("Mack", "Pinnacle")
+# golfwagon = GolfCart("Yamaha", "GC100")
+# cesssna.get_make_model()
+# cesssna.moves()
+# mack.get_make_model()
+# mack.moves()
+# golfwagon.get_make_model()
+# golfwagon.moves()
+
+
