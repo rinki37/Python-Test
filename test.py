@@ -740,3 +740,28 @@
 # To activate the virtual environment -  .\venv\Scripts\Activate.ps1
 
 # To deactivate  - deactivate
+
+
+# See details of a packages - pip show requests (Here, requests is the name of the package.)
+
+# pypi.org contains the list of packages.
+
+###############################################################################
+### Creating a requirement.txt file so, others can know what packages are required for a particular project. 
+
+# Command to create a requirement.txt file - pip freeze > requirements.txt
+
+# To avoid the push of our venev folder add .venv in the gitignore file. 
+
+
+
+###############################################################################
+# Environment Variable File (.env)
+
+# We create environment variable file (.env) where we store our thinks like API keys, etc. We use this in development. 
+
+# We also do not commit this file as they contain our important things like secret key, api key, etc. 
+
+
+
+
