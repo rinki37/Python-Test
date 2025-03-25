@@ -711,3 +711,32 @@
 #    raise JustNotCoolError("This just is not cool.")
 # except Exception as error: 
 #     print(error)
+
+
+###############################################################################
+### 
+
+# PIP in python - Lets us install packages in our project for us to use. 
+
+# pip install requests or py -m pip install requests - This is currently being installed globally. 
+
+# pip list - gives the list of packages and their versions installed. 
+
+# To install a particular version - pip install requests==2.30.0 
+
+# Update a particular package to particular package - pip install -U requests
+
+# Uninstall a package  - pip uninstall requests
+
+
+###############################################################################
+### 
+
+# Virtual Environment - When one python module needs one version of a module and other need another version of that module, so to do that we have to create virtual environment. We do include this in project but don't include this in our github. 
+
+
+# Creating a virtual environment - Open that project folder and enter the following in terminal - python -m venv venv (Here, venv is the name of virtual environment folder.) 
+
+# To activate the virtual environment -  .\venv\Scripts\Activate.ps1
+
+# To deactivate  - deactivate
