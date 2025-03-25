@@ -763,5 +763,120 @@
 # We also do not commit this file as they contain our important things like secret key, api key, etc. 
 
 
+###############################################################################
+# File operations
+
+# r - Read
+# a - Append (Update)
+# w- Write
+# c- Create
+
+# Read - error if it doesn't exist. 
+
+# f = open("names.txt") # By default, if anything is not specified, it will consider this as a read operation. 
+# f = open("names.txt", "r") # To read 
+# print(f.read()) # This will print everything present in the file on the terminal.
+
+########
+
+# f = open("names.txt")
+# print(f.read(4)) # This will print the first 4 character present in the file. 
 
 
+#########
+
+# f = open("names.txt")
+# print(f.readline()) # Reads the first line present in the file. 
+
+##########
+
+# f = open("names.txt")
+# print(f.readline()) # This will read line 1
+# print(f.readline()) # This will read line 2 (next line)
+
+# #########
+# # This will loop over all lines present in the file. 
+# f = open("names.txt")
+
+# for line in f:
+#     print(line) 
+
+
+#########
+# This will loop over all lines present in the file. 
+# f = open("names.txt")
+
+# for line in f:
+#     print(line) 
+# f.close() # It is important to close the file. if we change something in the file, and that file is open, it needs to be closed for the change to be reflected. 
+
+
+#########
+# To handle exception while using files. 
+# try:
+#     f = open("nameslist.txt")
+#     print(f.read())
+# except: 
+#     print("The file you want to read doesn't exist.") # This will be printedas we don't have this file. 
+# finally:
+#     f.close()
+
+
+
+#########
+# Append - creates the file if it doesn't exist.
+
+# f = open("names.txt", "a")
+# f.write("Neil")
+# f.close()
+# f = open("names.txt")
+# print(f.read())
+# f.close()
+
+ 
+#########
+# Write - (This will overwrite everything present in the file.)
+# f = open("context.txt", "w")
+# f.write("I deleted all of the context.")
+# f.close()
+# f = open("context.txt")
+# print(f.read())
+# f.close()
+
+
+#########
+# # Two ways to create a new file
+# Opens a file for writing, creates the file if it does not exist.
+
+# f = open("name_list.txt", "w")
+# f.close()
+
+
+# Creates the specified files but returns an error if the file exists
+# import os
+# if not os.path.exists("dave.txt"): # if this file doesn't exists
+#     f = open("dave.txt", "x") # Create
+
+
+#########
+   
+# Delete a file 
+# avoid an error if it doesn't exist
+# import os
+# if not os.path.exists("dave.txt"): # if this file doesn't exists
+#     os.remove("dave.txt")
+# else:
+#     print("The file you wish to delete does not exist.")
+
+
+
+#########
+
+# with open("more_names.txt") as f:
+#     content = f.read()
+# with open("names.txt", "w") as f:
+#     f.write(content)
+    
+
+###############################################################################
+ 
