@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, make_response, render_template
 import jwt  
 from datetime import datetime, timedelta
 from functools import wraps
-#from werkzeug.security import generate_password_hash, check_password_hash # used for hashing passwords
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a5f99d87a7864861b1d614c72a8095ab'
