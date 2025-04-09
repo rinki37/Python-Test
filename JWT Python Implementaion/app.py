@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response, render_template
+from flask import Flask, request, jsonify, make_response, render_template, redirect, url_for
 import jwt  
 from datetime import datetime, timedelta
 from functools import wraps
@@ -11,40 +11,39 @@ def token_required(func):
     def decorated(*args, **kwargs):
         token = request.args.get('token')
         if not token:
-            return jsonify({'message': "Token is missing!"}), 403
+            return render_template('error.html', message="Token is missing!"), 403
         try:
             payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return jsonify({'message': "Token has expired"}), 403
+            return render_template('error.html', message="Token has expired"), 403
         except jwt.InvalidTokenError:
-            return jsonify({'message': "Invalid token"}), 403
+            return render_template('error.html', message="Invalid token"), 403
 
         return func(*args, **kwargs) 
     return decorated 
 
-# Public
+# Public route
 @app.route('/public')
 def public():
-    return 'For everyone'   
+    return render_template('public.html')   
 
-# Authenticated 
+# Authenticated route
 @app.route('/auth')
 @token_required
 def auth():
-    return 'JWT authentication successful.'
+    return render_template('auth.html')
 
-# Home    
+# Home route    
 @app.route('/')
 def home():
     return render_template('login.html')
 
-# Login    
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        print("Form Data:", request.form)
         if not request.form.get('username') or not request.form.get('password'):
-            return make_response('Username and password required', 400)
+            return render_template('login.html', error='Username and password required')
         
         if request.form['password'] == "12345":
             token = jwt.encode(
@@ -56,9 +55,9 @@ def login():
                 algorithm='HS256'
             )
             
-            return jsonify({'token': token})
+            return render_template('success.html', token=token)
         else:
-            return make_response('Could not verify', 403, {'WWW-Authenticate': 'Basic realm: "Authentication failed!"'})
+            return render_template('login.html', error='Authentication failed')
     
     return render_template('login.html')
 

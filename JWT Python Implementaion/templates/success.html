@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .token {
+            word-wrap: break-word;
+            background-color: #f5f5f5;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Login Successful!</h1>
+    <p>Here's your JWT token:</p>
+    <div class="token">{{ token }}</div>
+    <p>This token will expire in 2 minutes.</p>
+    <p>Now you can access the <a href="/auth?token={{ token }}">authenticated page</a>.</p>
+    <p><a href="/">Back to login</a></p>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticated Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a> |
+        <a href="/public">Public</a> |
+        <a href="/auth">Authenticated</a>
+    </div>
+    <h1>Authenticated Page</h1>
+    <p>Congratulations! Your JWT authentication was successful.</p>
+    <p>This page is only accessible with a valid token.</p>
+</body>
+
+</html>
