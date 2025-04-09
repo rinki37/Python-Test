@@ -1,0 +1,1 @@
+In this application, i have created api and also created html pages for them.
