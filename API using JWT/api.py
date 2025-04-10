@@ -6,6 +6,7 @@ from functools import wraps
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a5f99d87a7864861b1d614c72a8095ab'
+app.config['REFRESH_SECRET_KEY'] = 'a5f99d87a7864861b1d614c72a80ab'
 
 # In-memory db
 users_db = {
@@ -21,6 +22,9 @@ users_db = {
     }
 }
 
+refresh_tokens_store = set()
+revoked_tokens = set()
+blacklisted_access_token = set()
 
 def token_required(func):
     @wraps(func)
@@ -34,6 +38,11 @@ def token_required(func):
             
         if not token:
             return jsonify({'message': "Token is missing!"}), 401 # Unauthorized
+        
+        
+        if token in blacklisted_access_token:
+            return jsonify({"message" : "Token has been revoked"}), 403
+        
         try:
             payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
@@ -86,8 +95,6 @@ def register():
 # Login route (if user exists, generate jwt token for them) 
 @app.route('/login', methods=['POST'])
 def login():
-    print("Request Data:", request.data)  
-    print("Request JSON:", request.get_json())  
     if not request.is_json:
         return jsonify({"message" : "Request must be JSON"}), 400 # Bad request
     
@@ -105,7 +112,7 @@ def login():
     if not users_db[username]['password'] ==  password:
         return jsonify({"message" : "Invalid password"}), 401 # Unauthorized
       
-    token = jwt.encode(
+    access_token = jwt.encode(
         {
             'user': username,
             'exp': datetime.now() + timedelta(minutes=1)
@@ -113,8 +120,84 @@ def login():
         app.config['SECRET_KEY'],
         algorithm='HS256'
     )
+    
+    refresh_token = jwt.encode(
+        {
+            'user' : username,
+            'exp' : datetime.now() + timedelta(minutes = 10)
+        },
+        app.config['REFRESH_SECRET_KEY'],
+        algorithm='HS256'
+    )
+    refresh_tokens_store.add(refresh_token)
         
-    return jsonify({'token': token})
+    return jsonify({
+        'access_token': access_token, 
+        'refresh_token' : refresh_token
+    }), 200
 
+@app.route('/refresh', methods=['POST'])
+def refresh():
+    if not request.is_json:
+        return jsonify({"message": "Request must be JSON"}), 400
+
+    refresh_token = request.get_json().get('refresh_token')
+    if not refresh_token:
+        return jsonify({"message": "Request must contain refresh token"}), 400
+
+    if refresh_token not in refresh_tokens_store:
+        return jsonify({"message": "Invalid refresh token"}), 403
+
+    try:
+        payload = jwt.decode(
+            refresh_token,
+            app.config['REFRESH_SECRET_KEY'],
+            algorithms=['HS256']  # ✅ Fixed: Plural 'algorithms'
+        )
+    except jwt.ExpiredSignatureError:
+        refresh_tokens_store.discard(refresh_token)
+        return jsonify({"message": "Refresh token expired. Login again."}), 403
+    except jwt.InvalidTokenError:
+        return jsonify({"message": "Invalid refresh token"}), 403
+
+    new_access_token = jwt.encode(
+        {
+            'user': payload['user'],
+            'exp': datetime.now() + timedelta(minutes=1)
+        },
+        app.config['SECRET_KEY'],
+        algorithm='HS256'  # ✅ Singular 'algorithm'
+    )
+
+    return jsonify({"access_token": new_access_token}), 200
+
+# Logout to remove refresh token from store
+@app.route('/logout', methods=['POST'])
+def logout():
+    if not request.is_json:
+        return jsonify({"message" : "Request must be JSON"}), 400
+    
+    refresh_token = request.get_json().get('refresh_token')
+    access_token = request.headers['Authorization'].split(" ")[1]
+    if not refresh_token:
+        return jsonify({"message" : "Refresh token required"}), 400
+    
+    blacklisted_access_token.add(access_token)
+    
+    if refresh_token in refresh_tokens_store:
+        revoked_tokens.add(refresh_token)
+        refresh_tokens_store.discard(refresh_token)
+        return jsonify({
+            "message" : "Logout successful",
+            "access_token_revoked" :  True,
+            "refresh_token_revoked" : True
+            }), 200
+    else:
+        return jsonify({
+            "message" : "Partial logout. Invalid refresh token",
+            "access_token_revoked" : True,
+            "refresh_token_revoked" : False
+            }), 200
+        
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
