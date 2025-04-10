@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify, make_response, render_template
 import jwt  
 from datetime import datetime, timedelta
 from functools import wraps
-
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a5f99d87a7864861b1d614c72a8095ab'
@@ -25,6 +26,9 @@ users_db = {
 refresh_tokens_store = set()
 revoked_tokens = set()
 blacklisted_access_token = set()
+
+# Initilize the limiter
+limiter = Limiter(app=app, key_func=get_remote_address, default_limits=["200 per day"])
 
 def token_required(func):
     @wraps(func)
@@ -61,6 +65,7 @@ def public():
 # Authenticated route( requires token)
 @app.route('/auth')
 @token_required
+@limiter.limit("2 per minute")
 def auth():
     return jsonify({"message" : 'JWT authentication successful.'}), 200 # Ok
 
